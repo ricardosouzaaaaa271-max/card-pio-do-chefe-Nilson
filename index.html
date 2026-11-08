@@ -1,0 +1,306 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102f25">
+<title>Salgados do Chef Nilson | Cardápio Especial</title>
+<style>
+:root{--forest:#102f25;--forest2:#1b4938;--gold:#c69a4b;--paper:#fbf8f0;--cream:#f0e8d8;--ink:#262b26;--muted:#74776e;--line:#e6ddca}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+.hero{background:linear-gradient(135deg,#0d281f,#1c4a37);color:#fff8e9;padding:46px 20px 38px;text-align:center;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"✦";position:absolute;color:#c69a4b;opacity:.35;font-size:130px;top:5px}
+.hero:before{left:4%}.hero:after{right:4%}
+.eyebrow{text-transform:uppercase;letter-spacing:4px;color:#e0bd79;font-size:11px;font-weight:800}
+h1{font-family:Georgia,serif;font-size:clamp(38px,8vw,68px);font-weight:500;line-height:1.02;margin:14px 0 8px}
+.hero p{margin:10px auto 0;max-width:560px;color:#e9dfca;font-family:Georgia,serif;font-style:italic;font-size:19px}
+.hero-mark{width:66px;height:2px;background:var(--gold);margin:22px auto 0}
+.wrap{max-width:1120px;margin:auto;padding:0 18px 70px}
+.intro{max-width:720px;margin:26px auto 22px;text-align:center;color:#656b61;line-height:1.65}
+.toolbar{position:sticky;top:0;z-index:10;background:#fbf8f0f2;backdrop-filter:blur(12px);padding:12px 0 10px;border-bottom:1px solid var(--line)}
+.search-wrap{max-width:560px;margin:0 auto 12px;position:relative}
+.search-wrap span{position:absolute;left:16px;top:11px;font-size:18px;color:#777}
+#search{width:100%;padding:13px 16px 13px 44px;border:1px solid #d9cfba;border-radius:30px;background:white;outline:none}
+#search:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c69a4b22}
+.nav{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 5px;scrollbar-width:thin}
+.nav a{flex:0 0 auto;text-decoration:none;color:var(--forest);background:white;border:1px solid #ded3bc;padding:9px 14px;border-radius:30px;font-size:13px;font-weight:750}
+.nav a:hover,.nav a.active{background:var(--forest);border-color:var(--forest);color:white}
+.section{padding-top:34px;scroll-margin-top:154px}
+.section-title{display:flex;align-items:center;gap:14px;margin:0 0 17px}
+.section-title h2{font:500 clamp(25px,4vw,34px) Georgia,serif;color:var(--forest);margin:0}
+.section-title:after{content:"";height:1px;background:var(--gold);flex:1;opacity:.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.dish{background:white;border:1px solid var(--line);border-radius:14px;padding:17px 17px 14px;box-shadow:0 4px 15px #1d29140a;display:flex;flex-direction:column;min-height:145px}
+.dish h3{font-size:15px;line-height:1.4;margin:0 0 7px;color:#27352c}
+.dish p{font-size:13px;line-height:1.55;color:#77796f;margin:0 0 14px}
+.dish-bottom{display:flex;align-items:center;gap:9px;margin-top:auto;padding-top:12px;border-top:1px solid #f0eadf}
+.qty-btn{width:36px;height:36px;border:0;border-radius:10px;background:#e9efe9;color:var(--forest);font-size:21px;font-weight:800;cursor:pointer;touch-action:manipulation}
+.qty-btn.plus{background:var(--forest);color:white}
+.qty-number{min-width:20px;text-align:center;font-weight:800;color:var(--forest)}
+.qty-caption{font-size:11px;color:#8a8a7e;margin-left:auto}
+.floating-cart{position:fixed;right:18px;bottom:20px;z-index:30;width:62px;height:62px;border:0;border-radius:50%;background:var(--gold);color:var(--forest);font-size:26px;box-shadow:0 7px 22px #0003;cursor:pointer}
+.floating-cart b{position:absolute;right:-3px;top:-4px;background:#a42f2f;color:white;border-radius:20px;min-width:23px;padding:3px 6px;font-size:12px}
+.overlay{position:fixed;inset:0;z-index:50;background:#06150f99;display:none;justify-content:flex-end}
+.overlay.open{display:flex}
+.drawer{width:min(100%,440px);height:100%;background:#fffdf7;display:flex;flex-direction:column;padding:22px;box-shadow:-10px 0 35px #0003;animation:slide .2s ease-out}
+@keyframes slide{from{transform:translateX(25px);opacity:.6}to{transform:translateX(0);opacity:1}}
+.drawer-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:15px}
+.drawer-head h2{font:500 30px Georgia,serif;color:var(--forest);margin:0}
+.drawer-head p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.close{width:38px;height:38px;border:0;border-radius:50%;background:#eee8dc;color:var(--forest);font-size:25px;cursor:pointer}
+.cart-items{flex:1;overflow:auto;padding:15px 0;display:grid;align-content:start;gap:9px}
+.cart-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-radius:11px;background:#f3efe5}
+.cart-row-name{font-size:13px;font-weight:750;line-height:1.35}
+.cart-row-controls{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.cart-row-controls button{width:29px;height:29px;border:0;border-radius:50%;background:var(--forest);color:white;font-size:18px;cursor:pointer}
+.cart-row-controls span{font-weight:800;min-width:14px;text-align:center}
+.cart-empty{text-align:center;padding:30px 10px;color:#77796f;font-size:14px}
+.drawer-foot{border-top:1px solid var(--line);padding-top:14px}
+.cart-count-label{font-weight:800;color:var(--forest);margin-bottom:9px;font-size:14px}
+#customer{width:100%;padding:13px;border:1px solid #d9cfba;border-radius:9px;background:white;margin-bottom:9px;outline:none}
+.checkout{width:100%;padding:14px;border:0;border-radius:28px;background:var(--forest);color:white;font-weight:800;cursor:pointer}
+.checkout:disabled{opacity:.5;cursor:not-allowed}
+.footnote{font-size:11px;color:#858579;line-height:1.45;margin:10px 0 0}
+footer{text-align:center;padding:25px 15px;color:#8b806b;font:italic 15px Georgia,serif}
+body.drawer-open{overflow:hidden}
+@media(max-width:600px){.hero{padding:42px 18px 32px}.hero:before,.hero:after{font-size:85px}.section{scroll-margin-top:165px;padding-top:27px}.wrap{padding-left:13px;padding-right:13px}.dish{padding:15px}.qty-caption{font-size:10px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="eyebrow">Celebre com sabor</div>
+  <h1>Salgados do<br>Chef Nilson</h1>
+  <p>Cardápio especial de Natal e Ano Novo</p>
+  <div class="hero-mark"></div>
+</header>
+
+<main class="wrap">
+  <p class="intro">Escolha seus pratos favoritos, ajuste as quantidades e monte seu pedido. Ao finalizar, enviaremos sua seleção diretamente para o WhatsApp da loja.</p>
+  <div class="toolbar">
+    <div class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="Buscar prato ou ingrediente..." aria-label="Buscar no cardápio"></div>
+    <nav class="nav" aria-label="Categorias">
+      <a href="#cat-0">Tábuas de frios</a><a href="#cat-1">Escondidinhos</a><a href="#cat-2">Massas frescas</a><a href="#cat-3">Saladas</a><a href="#cat-4">Carnes</a><a href="#cat-5">Tortas</a><a href="#cat-6">Mesa mineira</a><a href="#cat-7">Molhos</a><a href="#cat-8">Porções</a><a href="#cat-9">Farofas</a><a href="#cat-10">Feijão</a><a href="#cat-11">Peixes e frutos do mar</a><a href="#cat-12">Arroz e risotos</a>
+    </nav>
+  </div>
+
+  <div id="menu">
+    <section class="section" id="cat-0"><div class="section-title"><h2>Tábuas de frios</h2></div><div class="grid"><article class="dish" data-search="tábuas de frios queijo minas "><h3>Queijo minas</h3><div class="dish-bottom" data-key="0-0" data-name="Queijo minas"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="tábuas de frios queijo gorgonzola "><h3>Queijo gorgonzola</h3><div class="dish-bottom" data-key="0-1" data-name="Queijo gorgonzola"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="tábuas de frios ovos de codorna "><h3>Ovos de codorna</h3><div class="dish-bottom" data-key="0-2" data-name="Ovos de codorna"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="tábuas de frios palmito "><h3>Palmito</h3><div class="dish-bottom" data-key="0-3" data-name="Palmito"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="tábuas de frios presunto "><h3>Presunto</h3><div class="dish-bottom" data-key="0-4" data-name="Presunto"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="tábuas de frios patê de frango "><h3>Patê de frango</h3><div class="dish-bottom" data-key="0-5" data-name="Patê de frango"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="tábuas de frios salame "><h3>Salame</h3><div class="dish-bottom" data-key="0-6" data-name="Salame"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article></div></section>
+
+    <section class="section" id="cat-1"><div class="section-title"><h2>Escondidinhos</h2></div><div class="grid"><article class="dish" data-search="escondidinhos escondidinho de carne seca purê de mandioca, carne seca desfiada, cebola, alho e requeijão."><h3>Escondidinho de carne seca</h3><p>Purê de mandioca, carne seca desfiada, cebola, alho e requeijão.</p><div class="dish-bottom" data-key="1-0" data-name="Escondidinho de carne seca"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="escondidinhos escondidinho de frango com catupiry purê de batata, frango desfiado e catupiry."><h3>Escondidinho de frango com Catupiry</h3><p>Purê de batata, frango desfiado e Catupiry.</p><div class="dish-bottom" data-key="1-1" data-name="Escondidinho de frango com Catupiry"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article><article class="dish" data-search="escondidinhos escondidinho de ragu de alcatra creme de mandioca, ragu de alcatra, azeite, cebola, pimentões, tomates sem sementes e cheiro-verde."><h3>Escondidinho de ragu de alcatra</h3><p>Creme de mandioca, ragu de alcatra, azeite, cebola, pimentões, tomates sem sementes e cheiro-verde.</p><div class="dish-bottom" data-key="1-2" data-name="Escondidinho de ragu de alcatra"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article></div></section>
+
+    <section class="section" id="cat-2"><div class="section-title"><h2>Massas frescas</h2></div><div class="grid">
+      <article class="dish" data-search="massas frescas capeletti frango com requeijão ricota com limão-siciliano quatro queijos tomate seco com rúcula carne de sol com catupiry">
+        <h3>Capeletti com opções de recheio</h3><p>Escolha o recheio desejado:</p>
+        <select class="capeletti-flavor" aria-label="Escolha o recheio do capeletti" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);margin:8px 0 12px">
+          <option value="">Selecione um recheio</option><option>Frango com requeijão</option><option>Ricota com limão-siciliano</option><option>Quatro queijos</option><option>Tomate seco com rúcula</option><option>Carne de sol com Catupiry</option>
+        </select>
+        <div class="dish-bottom capeletti-bottom" data-base-key="2-0" data-key="2-0" data-name="Capeletti">
+          <button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span>
+        </div>
+      </article>
+      <article class="dish" data-search="massas frescas lasanha de frango com alho-poró"><h3>Lasanha de frango com alho-poró</h3><div class="dish-bottom" data-key="2-1" data-name="Lasanha de frango com alho-poró"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="massas frescas lasanha à bolonhesa"><h3>Lasanha à bolonhesa</h3><div class="dish-bottom" data-key="2-2" data-name="Lasanha à bolonhesa"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-3"><div class="section-title"><h2>Saladas</h2></div><div class="grid">
+      <article class="dish" data-search="saladas salada tropical"><h3>Salada tropical</h3><div class="dish-bottom" data-key="3-0" data-name="Salada tropical"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="saladas salpicão de frango"><h3>Salpicão de frango</h3><div class="dish-bottom" data-key="3-1" data-name="Salpicão de frango"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-4"><div class="section-title"><h2>Carnes</h2></div><div class="grid">
+      <article class="dish" data-search="carnes cupim recheado com bacon cebolas baby batatas rústicas"><h3>Cupim recheado com bacon</h3><p>Acompanhado com cebolas baby e batatas rústicas.</p><div class="dish-bottom" data-key="4-0" data-name="Cupim recheado com bacon"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="carnes costelinha ao molho de jabuticaba"><h3>Costelinha ao molho de jabuticaba</h3><div class="dish-bottom" data-key="4-1" data-name="Costelinha ao molho de jabuticaba"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="carnes filé mignon ao molho madeira"><h3>Filé-mignon ao molho madeira</h3><div class="dish-bottom" data-key="4-2" data-name="Filé-mignon ao molho madeira"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="carnes lombo suíno"><h3>Lombo suíno</h3><div class="dish-bottom" data-key="4-3" data-name="Lombo suíno"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-5"><div class="section-title"><h2>Tortas</h2></div><div class="grid">
+      <article class="dish" data-search="tortas torta de frango"><h3>Torta de frango</h3><div class="dish-bottom" data-key="5-0" data-name="Torta de frango"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="tortas torta de palmito"><h3>Torta de palmito</h3><div class="dish-bottom" data-key="5-1" data-name="Torta de palmito"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-6"><div class="section-title"><h2>Mesa mineira</h2></div><div class="grid">
+      <article class="dish" data-search="mesa mineira feijão tropeiro"><h3>Feijão tropeiro</h3><div class="dish-bottom" data-key="6-0" data-name="Feijão tropeiro"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="mesa mineira mandioca cozida"><h3>Mandioca cozida</h3><div class="dish-bottom" data-key="6-1" data-name="Mandioca cozida"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="mesa mineira torresmo"><h3>Torresmo</h3><div class="dish-bottom" data-key="6-2" data-name="Torresmo"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-7"><div class="section-title"><h2>Molhos</h2></div><div class="grid">
+      <article class="dish" data-search="molhos molho madeira"><h3>Molho madeira</h3><div class="dish-bottom" data-key="7-0" data-name="Molho madeira"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="molhos molho de jabuticaba"><h3>Molho de jabuticaba</h3><div class="dish-bottom" data-key="7-1" data-name="Molho de jabuticaba"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-8"><div class="section-title"><h2>Porções</h2></div><div class="grid">
+      <article class="dish" data-search="porções batata frita"><h3>Batata frita</h3><div class="dish-bottom" data-key="8-0" data-name="Batata frita"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="porções doritos"><h3>Doritos</h3><div class="dish-bottom" data-key="8-1" data-name="Doritos"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-9"><div class="section-title"><h2>Farofas</h2></div><div class="grid">
+      <article class="dish" data-search="farofas farofa de bacon"><h3>Farofa de bacon</h3><div class="dish-bottom" data-key="9-0" data-name="Farofa de bacon"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="farofas farofa especial"><h3>Farofa especial</h3><div class="dish-bottom" data-key="9-1" data-name="Farofa especial"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-10"><div class="section-title"><h2>Feijão</h2></div><div class="grid">
+      <article class="dish" data-search="feijão feijão tropeiro"><h3>Feijão tropeiro</h3><div class="dish-bottom" data-key="10-0" data-name="Feijão tropeiro"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="feijão feijão gordo"><h3>Feijão gordo</h3><div class="dish-bottom" data-key="10-1" data-name="Feijão gordo"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-11"><div class="section-title"><h2>Peixes e frutos do mar</h2></div><div class="grid">
+      <article class="dish" data-search="peixes e frutos do mar bacalhoada"><h3>Bacalhoada</h3><div class="dish-bottom" data-key="11-0" data-name="Bacalhoada"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="peixes e frutos do mar paella"><h3>Paella</h3><div class="dish-bottom" data-key="11-1" data-name="Paella"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+
+    <section class="section" id="cat-12"><div class="section-title"><h2>Arroz e risotos</h2></div><div class="grid">
+      <article class="dish" data-search="arroz e risotos arroz branco"><h3>Arroz branco</h3><div class="dish-bottom" data-key="12-0" data-name="Arroz branco"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos arroz com brócolis"><h3>Arroz com brócolis</h3><div class="dish-bottom" data-key="12-1" data-name="Arroz com brócolis"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos arroz com alho"><h3>Arroz com alho</h3><div class="dish-bottom" data-key="12-2" data-name="Arroz com alho"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos arroz com amêndoas"><h3>Arroz com amêndoas</h3><div class="dish-bottom" data-key="12-3" data-name="Arroz com amêndoas"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos arroz de festa"><h3>Arroz de festa</h3><div class="dish-bottom" data-key="12-4" data-name="Arroz de festa"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos arroz com passas"><h3>Arroz com passas</h3><div class="dish-bottom" data-key="12-5" data-name="Arroz com passas"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos arroz à grega"><h3>Arroz à grega</h3><div class="dish-bottom" data-key="12-6" data-name="Arroz à grega"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos arroz à piemontese arroz arbóreo, cogumelos, cebola e parmesão."><h3>Arroz à piemontese</h3><p>Arroz arbóreo, cogumelos, cebola e parmesão.</p><div class="dish-bottom" data-key="12-8" data-name="Arroz à piemontese"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos risoto de camarão arroz arbóreo, cebola, camarão, tomates sem sementes, coentro, pimentões, parmesão e molho bechamel."><h3>Risoto de camarão</h3><p>Arroz arbóreo, cebola, camarão, tomates sem sementes, coentro, pimentões, parmesão e molho bechamel.</p><div class="dish-bottom" data-key="12-9" data-name="Risoto de camarão"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos risoto de filé-mignon arroz arbóreo, filé-mignon, cebola, pimentões e molho bechamel."><h3>Risoto de filé-mignon</h3><p>Arroz arbóreo, filé-mignon, cebola, pimentões e molho bechamel.</p><div class="dish-bottom" data-key="12-10" data-name="Risoto de filé-mignon"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos risoto de palmito com pimenta-biquinho arroz arbóreo, palmito, pimenta-biquinho, cebola, molho bechamel e parmesão."><h3>Risoto de palmito com pimenta-biquinho</h3><p>Arroz arbóreo, palmito, pimenta-biquinho, cebola, molho bechamel e parmesão.</p><div class="dish-bottom" data-key="12-11" data-name="Risoto de palmito com pimenta-biquinho"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+      <article class="dish" data-search="arroz e risotos paeja de frutos do mar arroz arbóreo, cebola, pimentões, camarão, mexilhões, polvo, lula, ervilhas, tomates sem sementes e lascas de parmesão."><h3>Paeja de frutos do mar</h3><p>Arroz arbóreo, cebola, pimentões, camarão, mexilhões, polvo, lula, ervilhas, tomates sem sementes e lascas de parmesão.</p><div class="dish-bottom" data-key="12-12" data-name="Paeja de frutos do mar"><button class="qty-btn minus" type="button" aria-label="Diminuir">−</button><span class="qty-number">0</span><button class="qty-btn plus" type="button" aria-label="Adicionar">＋</button><span class="qty-caption">Adicionar ao pedido</span></div></article>
+    </div></section>
+  </div>
+</main>
+
+<footer>© <span id="year"></span> Salgados do Chef Nilson · Boas festas!</footer>
+
+<button class="floating-cart" type="button" id="open-cart" aria-label="Abrir carrinho">🛒<b id="bubble-count">0</b></button>
+<div class="overlay" id="overlay">
+  <section class="drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div class="drawer-head">
+      <div><h2 id="cart-title">Seu pedido</h2><p>Confira os itens antes de enviar</p></div>
+      <button class="close" type="button" id="close-cart" aria-label="Fechar">×</button>
+    </div>
+    <div class="cart-items" id="cart-items"><div class="cart-empty">Seu carrinho está vazio.</div></div>
+    <div class="drawer-foot">
+      <div class="cart-count-label" id="cart-total">0 itens selecionados</div>
+      <input id="customer" type="text" placeholder="Digite seu nome" autocomplete="name">
+      <button class="checkout" type="button" id="checkout">Finalizar e enviar pelo WhatsApp</button>
+      <p class="footnote">O valor e a disponibilidade dos pratos serão confirmados pela equipe.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const STORE_WHATSAPP = "5531975290234";
+const cart = new Map();
+const $ = (selector, root=document) => root.querySelector(selector);
+
+function openCart() { $("#overlay").classList.add("open"); document.body.classList.add("drawer-open"); }
+function closeCart() { $("#overlay").classList.remove("open"); document.body.classList.remove("drawer-open"); }
+$("#open-cart").addEventListener("click", openCart);
+$("#close-cart").addEventListener("click", closeCart);
+$("#overlay").addEventListener("click", e => { if(e.target.id==="overlay") closeCart(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape") closeCart(); });
+
+function updateCart() {
+  const list=$("#cart-items");
+  list.replaceChildren();
+  let total=0;
+  if(cart.size===0) {
+    const empty=document.createElement("div"); empty.className="cart-empty"; empty.textContent="Seu carrinho está vazio. Escolha os pratos no cardápio."; list.append(empty);
+  }
+  for(const [key,item] of cart) {
+    total+=item.qty;
+    const row=document.createElement("div"); row.className="cart-row";
+    const name=document.createElement("div"); name.className="cart-row-name"; name.textContent=item.name;
+    const controls=document.createElement("div"); controls.className="cart-row-controls";
+    const minus=document.createElement("button"); minus.type="button"; minus.textContent="−"; minus.setAttribute("aria-label","Diminuir quantidade");
+    minus.addEventListener("click",()=>setQuantity(key,item.qty-1));
+    const qty=document.createElement("span"); qty.textContent=item.qty;
+    const plus=document.createElement("button"); plus.type="button"; plus.textContent="+"; plus.setAttribute("aria-label","Aumentar quantidade");
+    plus.addEventListener("click",()=>setQuantity(key,item.qty+1));
+    controls.append(minus,qty,plus); row.append(name,controls); list.append(row);
+  }
+  $("#cart-total").textContent=total+" "+(total===1?"item selecionado":"itens selecionados");
+  $("#bubble-count").textContent=total;
+  document.querySelectorAll(".dish-bottom").forEach(control=>{
+    if(control.classList.contains("capeletti-bottom")){
+      const flavor=control.closest(".dish").querySelector(".capeletti-flavor").value;
+      $(".qty-number",control).textContent=flavor?(cart.get("2-0::"+flavor)?.qty||0):0;
+    } else {
+      const item=cart.get(control.dataset.key);
+      $(".qty-number",control).textContent=item?item.qty:0;
+    }
+  });
+  $("#checkout").disabled=!cart.size;
+}
+function setQuantity(key,qty) {
+  const baseKey=key.split("::")[0];
+  const control=document.querySelector('.dish-bottom[data-base-key="'+CSS.escape(baseKey)+'"], .dish-bottom[data-key="'+CSS.escape(baseKey)+'"]');
+  if(qty<=0) cart.delete(key);
+  else {
+    const flavor=key.includes("::") ? key.split("::").slice(1).join("::") : "";
+    const name=flavor ? "Capeletti — recheio: "+flavor : control.dataset.name;
+    cart.set(key,{name,qty});
+  }
+  updateCart();
+}
+document.querySelectorAll(".dish-bottom").forEach(control=>{
+  const key=control.dataset.key;
+  const flavorSelect=control.closest(".dish").querySelector(".capeletti-flavor");
+  const selectedKey=()=>{
+    if(!flavorSelect) return key;
+    const flavor=flavorSelect.value;
+    if(!flavor){ alert("Escolha o recheio do capeletti antes de adicionar."); return null; }
+    return key+"::"+flavor;
+  };
+  $(".plus",control).addEventListener("click",()=>{
+    const itemKey=selectedKey(); if(!itemKey) return;
+    setQuantity(itemKey,(cart.get(itemKey)?.qty||0)+1);
+    if(flavorSelect) updateCapelettiCount(control,flavorSelect.value);
+  });
+  $(".minus",control).addEventListener("click",()=>{
+    const itemKey=selectedKey(); if(!itemKey) return;
+    setQuantity(itemKey,(cart.get(itemKey)?.qty||0)-1);
+    if(flavorSelect) updateCapelettiCount(control,flavorSelect.value);
+  });
+});
+function updateCapelettiCount(control,flavor){
+  const key="2-0::"+flavor;
+  $(".qty-number",control).textContent=cart.get(key)?.qty||0;
+}
+document.querySelectorAll(".capeletti-flavor").forEach(select=>{
+  select.addEventListener("change",()=>{
+    const control=select.closest(".dish").querySelector(".capeletti-bottom");
+    updateCapelettiCount(control,select.value);
+  });
+});
+
+$("#search").addEventListener("input",()=>{
+  const term=$("#search").value.trim().toLocaleLowerCase("pt-BR");
+  document.querySelectorAll(".dish").forEach(card=>{card.hidden=!card.dataset.search.includes(term);});
+  document.querySelectorAll(".section").forEach(section=>{section.hidden=!section.querySelector(".dish:not([hidden])");});
+});
+document.querySelectorAll(".nav a").forEach(link=>{
+  link.addEventListener("click",event=>{
+    event.preventDefault();
+    const target=document.querySelector(link.getAttribute("href"));
+    if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+});
+
+function sendOrder(){
+  const customer=$("#customer").value.trim();
+  if(!cart.size){alert("Adicione pelo menos um prato ao carrinho.");return;}
+  if(!customer){alert("Digite seu nome para continuar.");$("#customer").focus();return;}
+  const lines=Array.from(cart.values()).map(item=>"• "+item.name+" — quantidade: "+item.qty).join("\n");
+  const message="Olá! Meu nome é "+customer+".\nGostaria de fazer este pedido:\n\n"+lines+"\n\nPoderiam confirmar os valores e a disponibilidade?";
+  const whatsappUrl="https://wa.me/"+STORE_WHATSAPP+"?text="+encodeURIComponent(message);
+  window.location.href=whatsappUrl;
+}
+$("#checkout").addEventListener("click",sendOrder);
+$("#year").textContent=new Date().getFullYear();
+updateCart();
+</script>
+</body>
+</html>
